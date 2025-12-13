@@ -1,5 +1,6 @@
 const state = {
-    files: [],
+    companyFiles: [],
+    employeeFiles: [],
     sessionId: null,
     plan: null,
     isProcessing: false
@@ -11,9 +12,16 @@ const dom = {
     planSection: document.getElementById('plan-section'),
     buildSection: document.getElementById('build-section'),
     successSection: document.getElementById('success-section'),
-    fileInput: document.getElementById('file-input'),
-    uploadArea: document.getElementById('upload-area'),
-    fileList: document.getElementById('file-list'),
+
+    companyFileInput: document.getElementById('company-file-input'),
+    companyUploadArea: document.getElementById('company-upload-area'),
+    companyFileList: document.getElementById('company-file-list'),
+
+    employeeFileInput: document.getElementById('employee-file-input'),
+    employeeUploadArea: document.getElementById('employee-upload-area'),
+    employeeFileList: document.getElementById('employee-file-list'),
+
+    nTasksInput: document.getElementById('n-tasks-input'),
     uploadBtn: document.getElementById('upload-btn'),
     processingText: document.getElementById('processing-text'),
     planContent: document.getElementById('plan-content'),
@@ -23,39 +31,60 @@ const dom = {
     downloadBtn: document.getElementById('download-btn')
 };
 
-// Event Listeners
-dom.uploadArea.addEventListener('click', () => dom.fileInput.click());
-dom.uploadArea.addEventListener('dragover', (e) => {
+// Event Listeners for Company Files
+dom.companyUploadArea.addEventListener('click', () => dom.companyFileInput.click());
+dom.companyUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dom.uploadArea.classList.add('dragover');
+    dom.companyUploadArea.classList.add('dragover');
 });
-dom.uploadArea.addEventListener('dragleave', () => dom.uploadArea.classList.remove('dragover'));
-dom.uploadArea.addEventListener('drop', handleDrop);
-dom.fileInput.addEventListener('change', handleFileSelect);
+dom.companyUploadArea.addEventListener('dragleave', () => dom.companyUploadArea.classList.remove('dragover'));
+dom.companyUploadArea.addEventListener('drop', (e) => handleDrop(e, 'company'));
+dom.companyFileInput.addEventListener('change', (e) => handleFileSelect(e, 'company'));
+
+// Event Listeners for Employee Files
+dom.employeeUploadArea.addEventListener('click', () => dom.employeeFileInput.click());
+dom.employeeUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dom.employeeUploadArea.classList.add('dragover');
+});
+dom.employeeUploadArea.addEventListener('dragleave', () => dom.employeeUploadArea.classList.remove('dragover'));
+dom.employeeUploadArea.addEventListener('drop', (e) => handleDrop(e, 'employee'));
+dom.employeeFileInput.addEventListener('change', (e) => handleFileSelect(e, 'employee'));
+
+// Other Event Listeners
 dom.uploadBtn.addEventListener('click', uploadFiles);
 dom.regenerateBtn.addEventListener('click', regeneratePlan);
 dom.approveBtn.addEventListener('click', buildRepo);
 
-function handleDrop(e) {
+function handleDrop(e, type) {
     e.preventDefault();
-    dom.uploadArea.classList.remove('dragover');
+    const uploadArea = type === 'company' ? dom.companyUploadArea : dom.employeeUploadArea;
+    uploadArea.classList.remove('dragover');
     const droppedFiles = Array.from(e.dataTransfer.files);
-    addFiles(droppedFiles);
+    addFiles(droppedFiles, type);
 }
 
-function handleFileSelect(e) {
+function handleFileSelect(e, type) {
     const selectedFiles = Array.from(e.target.files);
-    addFiles(selectedFiles);
+    addFiles(selectedFiles, type);
 }
 
-function addFiles(newFiles) {
-    state.files = [...state.files, ...newFiles];
-    renderFileList();
-    dom.uploadBtn.disabled = state.files.length === 0;
+function addFiles(newFiles, type) {
+    if (type === 'company') {
+        state.companyFiles = [...state.companyFiles, ...newFiles];
+        renderFileList('company');
+    } else {
+        state.employeeFiles = [...state.employeeFiles, ...newFiles];
+        renderFileList('employee');
+    }
+    updateUploadButton();
 }
 
-function renderFileList() {
-    dom.fileList.innerHTML = state.files.map(file => `
+function renderFileList(type) {
+    const files = type === 'company' ? state.companyFiles : state.employeeFiles;
+    const listElement = type === 'company' ? dom.companyFileList : dom.employeeFileList;
+
+    listElement.innerHTML = files.map(file => `
         <div class="file-item">
             <span>${file.name}</span>
             <span style="font-size: 0.8rem; color: var(--text-muted)">${(file.size / 1024).toFixed(1)} KB</span>
@@ -63,15 +92,22 @@ function renderFileList() {
     `).join('');
 }
 
+function updateUploadButton() {
+    dom.uploadBtn.disabled = state.companyFiles.length === 0 || state.employeeFiles.length === 0;
+}
+
 async function uploadFiles() {
     showSection('processing-section');
     dom.processingText.textContent = "Parsing documents and generating plan...";
 
     const formData = new FormData();
-    state.files.forEach(file => formData.append('files', file));
+    state.companyFiles.forEach(file => formData.append('company_files', file));
+    state.employeeFiles.forEach(file => formData.append('employee_files', file));
+
+    const nTasks = parseInt(dom.nTasksInput.value) || 1;
 
     try {
-        const response = await fetch('/api/init', {
+        const response = await fetch(`/api/init?n_tasks=${nTasks}`, {
             method: 'POST',
             body: formData
         });

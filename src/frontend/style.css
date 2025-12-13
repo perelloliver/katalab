@@ -26,7 +26,7 @@ body {
     display: flex;
     justify-content: center;
     padding: 2rem;
-    background-image: 
+    background-image:
         radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
 }
@@ -85,6 +85,17 @@ h2 {
 }
 
 /* Upload Section */
+.upload-group {
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
 .upload-area {
     border: 2px dashed var(--border-color);
     border-radius: 0.75rem;
@@ -94,7 +105,8 @@ h2 {
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.upload-area:hover, .upload-area.dragover {
+.upload-area:hover,
+.upload-area.dragover {
     border-color: var(--primary-color);
     background-color: rgba(59, 130, 246, 0.05);
 }
@@ -164,8 +176,13 @@ h2 {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Plan Display */
@@ -247,4 +264,33 @@ textarea:focus {
     display: inline-block;
     margin-top: 1rem;
     text-decoration: none;
+}
+
+/* Task Count Input */
+.task-count-group {
+    margin-bottom: 1rem;
+}
+
+.task-count-group label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.task-count-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: var(--glass-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.task-count-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }

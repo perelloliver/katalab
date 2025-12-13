@@ -8,7 +8,7 @@ import os
 from typing import List, Optional
 
 from src.backend.builder import KataBuilder
-from src.backend.models import CompanyInfo, KataPlan
+from src.backend.models import CompanyInfo, EmployeeInfo, KataPlan
 
 app = FastAPI()
 
@@ -27,46 +27,63 @@ from src.backend.sessions import session_manager
 class InitResponse(BaseModel):
     session_id: str
     company_info: CompanyInfo
+    employee_info: EmployeeInfo
     plan: KataPlan
 
 class PlanRequest(BaseModel):
     session_id: str
     feedback: Optional[str] = None
-    n_tasks: Optional[int] = 5
+    n_tasks: Optional[int] = 1
 
 class BuildRequest(BaseModel):
     session_id: str
 
 @app.post("/api/init", response_model=InitResponse)
-async def init_session(files: List[UploadFile], n_tasks: int = 5):
+async def init_session(company_files: List[UploadFile], employee_files: List[UploadFile], n_tasks: int = 5):
     session_id = str(uuid.uuid4())
     
-    # Read files content
-    docs = []
-    for file in files:
+    # Read company files content
+    company_docs = []
+    for file in company_files:
         content = await file.read()
         try:
             # Try decoding as utf-8
             text = content.decode("utf-8")
-            docs.append(text)
+            company_docs.append(text)
         except UnicodeDecodeError:
             # Skip non-text files for now or handle gracefully
             print(f"Skipping binary file {file.filename}")
             pass
     
-    if not docs:
-         raise HTTPException(status_code=400, detail="No valid text documents uploaded.")
+    # Read employee files content
+    employee_docs = []
+    for file in employee_files:
+        content = await file.read()
+        try:
+            # Try decoding as utf-8
+            text = content.decode("utf-8")
+            employee_docs.append(text)
+        except UnicodeDecodeError:
+            # Skip non-text files for now or handle gracefully
+            print(f"Skipping binary file {file.filename}")
+            pass
+    
+    if not company_docs:
+        raise HTTPException(status_code=400, detail="No valid company text documents uploaded.")
+    if not employee_docs:
+        raise HTTPException(status_code=400, detail="No valid employee text documents uploaded.")
 
     # Initialize Builder
-    builder = KataBuilder(docs=docs, output_dir=f"downloads/{session_id}", n_tasks=n_tasks)
+    builder = KataBuilder(docs=company_docs, employee_docs=employee_docs, output_dir=f"downloads/{session_id}", n_tasks=n_tasks)
     session_manager.save_session(session_id, builder)
     
     # Parse and Plan
     try:
         company_info = builder._parse_data()
+        employee_info = builder._parse_employee_data()
         plan = builder._plan_repo()
         session_manager.save_session(session_id, builder) # Save state after planning
-        return InitResponse(session_id=session_id, company_info=company_info, plan=plan)
+        return InitResponse(session_id=session_id, company_info=company_info, employee_info=employee_info, plan=plan)
     except Exception as e:
         print(f"Error in init_session: {e}")
         import traceback

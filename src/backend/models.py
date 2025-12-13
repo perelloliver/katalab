@@ -19,7 +19,7 @@ class Team(BaseModel):
 
 class Role(BaseModel):
     title: str = Field(description="The job title")
-    stack: list[str]
+    stack: list[str] = Field(max_length=10, description="List of technologies in the tech stack")
     requirements: str
     team: Optional[Team] = Field(default=None, description="The team this role is situated in.")
 
@@ -30,7 +30,14 @@ class CompanyInfo(BaseModel):
     products: Optional[list[ProductOrClient]] = None
     philosophy: str = Field(description="The engineering philosophy or mission statement at company level. For example, we are building the future of artificial intelligence in banking using human-centred design.")
 
-class KataTask(BaseModel):
+class EmployeeInfo(BaseModel):
+	name: str
+	stack: list[str]
+	experience_yrs: int
+	level: Literal["junior", "mid", "senior"]
+	likely_learning_style: str
+
+class Plan(BaseModel):
     id: str = Field(description="Unique identifier for the task, snake_case")
     name: str = Field(description="Human readable name of the task")
     description: str = Field(description="Detailed description of the task")
@@ -39,7 +46,7 @@ class KataTask(BaseModel):
 class KataPlan(BaseModel):
     title: str = Field(description="Title of the Kata Repository")
     description: str = Field(description="Overview of what this Kata aims to teach/assess")
-    tasks: list[KataTask]
+    tasks: list[Plan]
 
 class FileContent(BaseModel):
     filename: str = Field(description="Name of the file, e.g. main.py")

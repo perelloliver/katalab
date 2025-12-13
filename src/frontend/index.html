@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KataLab - Auto Kata Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -16,13 +18,40 @@
         <!-- Upload Section -->
         <section id="upload-section" class="card">
             <h2>Start New Project</h2>
-            <div id="upload-area" class="upload-area">
-                <div class="upload-icon">📄</div>
-                <p>Drag & drop CVs, Job Specs, or Engineering Docs here</p>
-                <p class="subtitle">or click to browse</p>
+            <p class="subtitle" style="margin-bottom: 2rem;">Upload company documents and candidate profile separately
+            </p>
+
+            <!-- Company Files Upload -->
+            <div class="upload-group">
+                <h3>Company Documents</h3>
+                <div id="company-upload-area" class="upload-area">
+                    <div class="upload-icon">🏢</div>
+                    <p>Drag & drop company docs here</p>
+                    <p class="subtitle">Job specs, engineering docs, company info</p>
+                </div>
+                <input type="file" id="company-file-input" multiple hidden>
+                <div id="company-file-list" class="file-list"></div>
             </div>
-            <input type="file" id="file-input" multiple hidden>
-            <div id="file-list" class="file-list"></div>
+
+            <!-- Employee Files Upload -->
+            <div class="upload-group" style="margin-top: 2rem;">
+                <h3>Candidate Profile</h3>
+                <div id="employee-upload-area" class="upload-area">
+                    <div class="upload-icon">👤</div>
+                    <p>Drag & drop candidate docs here</p>
+                    <p class="subtitle">CVs, resumes, portfolios</p>
+                </div>
+                <input type="file" id="employee-file-input" multiple hidden>
+                <div id="employee-file-list" class="file-list"></div>
+            </div>
+
+            <!-- Task Count Setting -->
+            <div class="task-count-group" style="margin-top: 2rem;">
+                <label for="n-tasks-input">Number of Tasks</label>
+                <input type="number" id="n-tasks-input" min="1" max="10" value="1" class="task-count-input">
+                <p class="subtitle" style="margin-top: 0.5rem;">How many coding tasks should be generated (1-10)</p>
+            </div>
+
             <button id="upload-btn" class="btn" disabled>Generate Plan</button>
         </section>
 
@@ -40,12 +69,14 @@
             <div id="plan-content" class="plan-details">
                 <!-- Plan details injected here -->
             </div>
-            
+
             <div class="feedback-area">
                 <h3>Feedback</h3>
-                <textarea id="feedback-input" placeholder="E.g., Make the tasks more focused on concurrency, or add a React Native task."></textarea>
+                <textarea id="feedback-input"
+                    placeholder="E.g., Make the tasks more focused on concurrency, or add a React Native task."></textarea>
                 <div style="display: flex; gap: 1rem;">
-                    <button id="regenerate-btn" class="btn" style="background: rgba(255,255,255,0.1);">Regenerate</button>
+                    <button id="regenerate-btn" class="btn"
+                        style="background: rgba(255,255,255,0.1);">Regenerate</button>
                     <button id="approve-btn" class="btn">Approve & Build</button>
                 </div>
             </div>
@@ -69,4 +100,5 @@
     </div>
     <script src="app.js"></script>
 </body>
+
 </html>

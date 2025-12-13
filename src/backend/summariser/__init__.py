@@ -1,9 +1,16 @@
 from .pipeline import InformationExtractionPipeline
-from src.backend.models import CompanyInfo
+from src.backend.models import CompanyInfo, EmployeeInfo
 
 class Summariser:
     def __init__(self, model_name: str = "gemini-3-pro-preview"):
         self.pipeline = InformationExtractionPipeline(output_format=CompanyInfo, llm=model_name)
 
     def run(self, documents: list[str]) -> CompanyInfo:
+        return self.pipeline.process_documents(documents)
+
+class EmployeeInfoExtractor:
+    def __init__(self, model_name: str = "gemini-3-pro-preview"):
+        self.pipeline = InformationExtractionPipeline(output_format=EmployeeInfo, llm=model_name)
+
+    def run(self, documents: list[str]) -> EmployeeInfo:
         return self.pipeline.process_documents(documents)
