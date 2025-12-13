@@ -1,6 +1,8 @@
 # Katalab
 
-Turn company documents into production-grade coding katas.
+![Logo](./fig/logo.jpg)
+
+Turn company documents into production-grade coding katas for custom employee team onboarding.
 
 ## Overview
 
