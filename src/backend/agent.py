@@ -1,5 +1,5 @@
 from src.backend.client import google_client
-from src.backend.models import CompanyInfo, EmployeeInfo, KataPlan, Plan, TaskImplementation
+from src.backend.models import RoleInformation, Plan, KataTask
 from google.genai import types
 
 from pydantic import create_model, Field
@@ -9,61 +9,37 @@ class KataAgent:
         self.client = google_client
         self.model_name = model_name
         self.n_tasks = n_tasks
-        self.latest_plan: KataPlan | None = None
+        self.latest_plan: Plan | None = None
 
-    def plan(self, company_data: CompanyInfo, employee_data: EmployeeInfo, feedback: str | None = None) -> KataPlan:
+    def plan(self, role_information: RoleInformation, feedback: str | None = None) -> Plan:
         prompt = f"""
-        You are an expert technical interviewer and coding kata designer.
-        Design a coding kata (a set of EXACTLY {self.n_tasks} tasks) tailored to the candidate based on:
+        You are a senior software engineer, technical interviewer and technical trainer.
+        You are designing a coding kata of length {self.n_tasks} tasks, tailored to the role information below.
+        Your plan will be passed to the engineering team.
+        Consider the most salient elements of the role that a new engineer would need to know in order to make their first successful contributions.
+        The engineering team will give you feedback, take this on board with each iteration.
 
-        Company Context:
-        {company_data.model_dump_json(indent=2)}
-
-        Candidate Profile:
-        {employee_data.model_dump_json(indent=2)}
+        Key contextual information about the role:
+        {role_information.model_dump_json(indent=2)}
 
         Feedback from previous iteration (if any):
         {feedback or "None"}
-
-        Tailor the kata to match the candidate's:
-        - Experience level: {employee_data.level}
-        - Years of experience: {employee_data.experience_yrs}
-        - Learning style: {employee_data.likely_learning_style}
-        - Technical stack: {employee_data.stack}
-
-        The kata should simulate real-world scenarios relevant to the company's product and tech stack,
-        while being appropriately challenging for the candidate's level.
-        Each task must be a logical step in building a feature or solving a problem.
 
         IMPORTANT: The output must contain exactly {self.n_tasks} tasks. No more, no less.
 
         Output a structured KataPlan.
         """
 
-        # Dynamic model to enforce n_tasks
-        DynamicKataPlan = create_model(
-            'DynamicKataPlan',
-            title=(str, Field(description="Title of the Kata Repository")),
-            description=(str, Field(description="A brief, plain language, engineer-to-engineer overview of what this Kata aims to teach/assess")),
-            tasks=(list[Plan], Field(min_length=self.n_tasks, max_length=self.n_tasks, description=f"List of exactly {self.n_tasks} tasks"))
-        )
-
         response = self.client.models.generate_content(
             model=self.model_name,
             contents=[prompt],
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
-                response_schema=DynamicKataPlan,
-            ),
+                response_schema=Plan
+            )
         )
-        
-        if not response.parsed:
-             raise ValueError("Failed to parse the response into KataPlan.")
 
-        # Convert back to standard KataPlan for type consistency if needed, 
-        # but the structure is identical so we can just cast or return
-        self.latest_plan = KataPlan(**response.parsed.model_dump())
-        return self.latest_plan
+        return response.parsed if response.parsed else raise ValueError(f"Failed to parse response: {response}")
 
     def run(self, company_data: CompanyInfo, employee_data: EmployeeInfo):
         if not self.latest_plan:
