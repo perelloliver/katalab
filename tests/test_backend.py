@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 from src.backend.builder import KataBuilder
 from src.backend.models import CompanyInfo, KataPlan, KataTask, Team, Role, TaskImplementation, FileContent
 from src.backend.agent import KataAgent
-from src.backend.summariser import Summariser
 
 # Mock Data
 MOCK_COMPANY = CompanyInfo(

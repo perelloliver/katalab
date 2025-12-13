@@ -1,10 +1,8 @@
-from typing import Optional
 from src.backend.agent import KataAgent
 from src.backend.summariser import Summariser
 from src.backend.models import CompanyInfo
 import os
 import zipfile
-import io
 
 class KataBuilder:
     def __init__(self, docs: list[str], summariser_llm: str = "gemini-3-pro-preview", agent_llm: str = "gemini-2.5-flash", output_dir: str = "downloads", n_tasks: int = 1):
@@ -47,7 +45,7 @@ class KataBuilder:
             os.makedirs(self.output_dir)
 
         # Create zip in memory first or directly write
-        zip_filename = f"kata_repo.zip"
+        zip_filename = "kata_repo.zip"
         zip_path = os.path.join(self.output_dir, zip_filename)
 
         with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:

@@ -4,7 +4,7 @@ from google.genai import types
 import json
 
 class KataAgent:
-    def __init__(self, model_name: str = "gemini-3-pro-preview", n_tasks: int = 1):
+    def __init__(self, model_name: str = "gemini-3-pro-preview", n_tasks: int = 3):
         self.client = google_client
         self.model_name = model_name
         self.n_tasks = n_tasks
@@ -13,7 +13,7 @@ class KataAgent:
     def plan(self, data: CompanyInfo, feedback: str | None = None) -> KataPlan:
         prompt = f"""
         You are an expert technical interviewer and coding kata designer.
-        Based on the following Company Information, design a coding kata (a set of {self.n_tasks} tasks) that assesses a candidate's suitability for the roles described.
+        Based on the following Company Information, design a coding kata (a set of EXACTLY {self.n_tasks} tasks) that assesses a candidate's suitability for the roles described.
         
         Company Info:
         {data.model_dump_json(indent=2)}
@@ -23,6 +23,8 @@ class KataAgent:
         
         The kata should simulate real-world scenarios relevant to the company's product and tech stack.
         Each task must be a logical step in building a feature or solving a problem.
+        
+        IMPORTANT: The output must contain exactly {self.n_tasks} tasks. No more, no less.
         
         Output a structured KataPlan.
         """
