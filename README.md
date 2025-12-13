@@ -2,7 +2,9 @@
 
 ![Logo](./fig/logo.jpg)
 
-Turn company documents into production-grade coding katas for custom employee team onboarding.
+Turn company documents into coding katas for custom employee team onboarding.
+
+Built entirely with Antigravity and Google AI Studio.
 
 ## Overview
 
