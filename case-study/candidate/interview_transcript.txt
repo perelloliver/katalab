@@ -1,0 +1,26 @@
+Interview Transcript
+Candidate: Jordan Lee
+Interviewer: Sarah Chen (Engineering Manager, Core Ledger)
+Date: Oct 24, 2023
+
+SARAH: Hi Jordan, thanks for joining. I've looked at your solution for the take-home test. Your implementation of the transaction matching algorithm was very efficient. The Big O complexity was optimal.
+
+JORDAN: Thanks Sarah. I spent a lot of time ensuring the hash map lookups were minimized. I enjoy optimizing for raw execution speed.
+
+SARAH: It showed. However, I noticed you used an in-memory lock (Mutex) to handle concurrency. How would that solution scale if we had to run this across 50 replicas of the service?
+
+JORDAN: Ah, right. If we scale horizontally, the local mutex won't work because the state isn't shared. I suppose we would need a distributed lock? Maybe Redis?
+
+SARAH: Correct. Have you implemented distributed locking or leader election patterns in your current role at LegacyBank?
+
+JORDAN: Not really. We run on a massive Oracle mainframe setup. It's mostly vertical scaling. If we need more power, we just buy a bigger server. We don't really do the whole containerization/Kubernetes orchestration thing yet.
+
+SARAH: I see. So if we asked you to design this service to run on AWS EKS and handle a region failover, how would you approach the persistence layer?
+
+JORDAN: I'm vaguely familiar with the concepts. I know we'd need read replicas and maybe some kind of eventual consistency model, but I've never actually built a system where I had to handle CAP theorem trade-offs myself. I'm eager to learn it though.
+
+SARAH: Great attitude. One last question. In your CV you mention "You Build It, You Run It". What's your experience with CI/CD pipelines?
+
+JORDAN: I've used Jenkins. But mostly the Ops team sets it up. I just push code and if the build turns green, I'm happy. I haven't written Terraform or configured a deployment pipeline from scratch.
+
+SARAH: Okay, thanks Jordan. That gives me a clear picture.
