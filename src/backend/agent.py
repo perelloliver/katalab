@@ -1,8 +1,7 @@
-from src.backend.client import google_client
-from src.backend.models import RoleInformation, Plan, KataTask
+from src.backend.google_client import google_client
+from src.backend.models import RoleInformation, Plan
 from google.genai import types
 
-from pydantic import create_model, Field
 
 class KataAgent:
     def __init__(self, model_name: str = "gemini-3-pro-preview", n_tasks: int = 3):
@@ -39,4 +38,7 @@ class KataAgent:
             )
         )
 
-        return response.parsed if response.parsed else raise ValueError(f"Failed to parse response: {response}")
+        if response.parsed:
+            return response.parsed
+        else:
+            raise ValueError(f"Failed to parse response: {response}")

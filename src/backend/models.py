@@ -33,5 +33,5 @@ class KataTask(BaseModel):
     description: str = Field(description="Very brief, engineering first description of the task: i.e Implement a logging system for the application - or develop a pydanticAI agent connected to a Weaviate vector database.")
 
 class Plan(BaseModel):
-    focus_points: list[FocusPoint] = Field(description="Core focus points for the kata")
+    focus_points: list[str] = Field(description="Core focus points for the kata")
     tasks: list[KataTask] = Field(description="List of tasks for the kata")
