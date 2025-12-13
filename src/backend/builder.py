@@ -7,9 +7,9 @@ import zipfile
 import io
 
 class KataBuilder:
-    def __init__(self, docs: list[str], model_name: str = "gemini-3-pro-preview", output_dir: str = "downloads"):
-        self.summariser = Summariser(model_name=model_name)
-        self.agent = KataAgent(model_name=model_name)
+    def __init__(self, docs: list[str], summariser_llm: str = "gemini-3-pro-preview", agent_llm: str = "gemini-2.5-flash", output_dir: str = "downloads", n_tasks: int = 1):
+        self.summariser = Summariser(model_name=summariser_llm)
+        self.agent = KataAgent(model_name=agent_llm, n_tasks=n_tasks)
         self.docs = docs
         self.output_dir = output_dir
         self.data: CompanyInfo | None = None
@@ -27,8 +27,14 @@ class KataBuilder:
     def _build_repo(self):
         if not self.data:
             raise ValueError("Data not parsed yet.")
-        self.repo = self.agent.run(data=self.data)
-        return self.repo
+        
+        self.repo = {}
+        generator = self.agent.run(data=self.data)
+        
+        for event in generator:
+            if event["type"] == "file":
+                self.repo[event["path"]] = event["content"]
+            yield event
 
     def _output_repo(self) -> str:
         """

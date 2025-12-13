@@ -33,12 +33,13 @@ class InitResponse(BaseModel):
 class PlanRequest(BaseModel):
     session_id: str
     feedback: Optional[str] = None
+    n_tasks: Optional[int] = 5
 
 class BuildRequest(BaseModel):
     session_id: str
 
 @app.post("/api/init", response_model=InitResponse)
-async def init_session(files: List[UploadFile]):
+async def init_session(files: List[UploadFile], n_tasks: int = 5):
     session_id = str(uuid.uuid4())
     
     # Read files content
@@ -58,7 +59,7 @@ async def init_session(files: List[UploadFile]):
          raise HTTPException(status_code=400, detail="No valid text documents uploaded.")
 
     # Initialize Builder
-    builder = KataBuilder(docs=docs, output_dir=f"downloads/{session_id}")
+    builder = KataBuilder(docs=docs, output_dir=f"downloads/{session_id}", n_tasks=n_tasks)
     session_manager.save_session(session_id, builder)
     
     # Parse and Plan
@@ -94,15 +95,29 @@ async def build_repo(request: BuildRequest):
     builder = session_manager.get_session(request.session_id)
     if not builder:
         raise HTTPException(status_code=404, detail="Session not found")
-    try:
-        builder._build_repo()
-        zip_path = builder._output_repo()
-        return {"status": "success", "download_url": f"/api/download/{request.session_id}"}
-    except Exception as e:
-        print(f"Error in build_repo: {e}")
-        import traceback
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+    
+    def event_stream():
+        try:
+            for event in builder._build_repo():
+                import json
+                yield json.dumps(event) + "\n"
+            
+            # Save session at end
+            session_manager.save_session(request.session_id, builder)
+            
+            # Create the ZIP file explicitly here after streaming
+            builder._output_repo()
+            
+            # Yield final success event with url
+            yield json.dumps({"type": "complete", "download_url": f"/api/download/{request.session_id}"}) + "\n"
+        except Exception as e:
+            print(f"Error in event_stream: {e}")
+            import traceback
+            traceback.print_exc()
+            yield json.dumps({"type": "error", "message": str(e)}) + "\n"
+
+    from fastapi.responses import StreamingResponse
+    return StreamingResponse(event_stream(), media_type="application/x-ndjson")
 
 @app.get("/api/download/{session_id}")
 async def download_repo(session_id: str):

@@ -151,7 +151,7 @@ async function regeneratePlan() {
 
 async function buildRepo() {
     showSection('processing-section');
-    dom.processingText.textContent = "Building repository... This may take a moment.";
+    dom.processingText.textContent = "Initializing build...";
 
     try {
         const response = await fetch('/api/build', {
@@ -160,15 +160,46 @@ async function buildRepo() {
             body: JSON.stringify({ session_id: state.sessionId })
         });
 
-        if (!response.ok) throw new Error('Build failed');
+        if (!response.ok) throw new Error('Build failed to start');
 
-        const result = await response.json();
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
 
-        dom.downloadBtn.parentElement.href = result.download_url;
-        showSection('success-section');
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop(); // Keep incomplete chunk
+
+            for (const line of lines) {
+                if (!line.trim()) continue;
+                try {
+                    const event = JSON.parse(line);
+                    handleBuildEvent(event);
+                } catch (e) {
+                    console.error("Error parsing stream line:", e, line);
+                }
+            }
+        }
+
     } catch (error) {
         console.error(error);
         alert('Failed to build repository.');
+        showSection('plan-section');
+    }
+}
+
+function handleBuildEvent(event) {
+    if (event.type === 'log') {
+        dom.processingText.textContent = event.message;
+    } else if (event.type === 'complete') {
+        dom.downloadBtn.parentElement.href = event.download_url;
+        showSection('success-section');
+    } else if (event.type === 'error') {
+        alert("Error during build: " + event.message);
         showSection('plan-section');
     }
 }
