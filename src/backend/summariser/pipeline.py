@@ -1,7 +1,7 @@
 from typing import List, Type, TypeVar, Generic
 from google.genai import types
 from pydantic import BaseModel
-from src.client import google_client
+from src.backend.client import google_client
 
 T = TypeVar("T", bound=BaseModel)
 

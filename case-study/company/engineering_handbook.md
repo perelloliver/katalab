@@ -11,7 +11,6 @@ This means developers are responsible for the entire lifecycle of their services
 ## Our Tech Stack
 
 ### Backend
-- **Core Services**: Go (Golang) for high-performance, concurrent services (e.g., Flux Exchange).
 - **Data Processing**: Python for data science pipelines, risk analysis, and ledger reconciliation.
 - **Legacy**: A strict subset of Node.js services are being deprecated and migrated to Go.
 

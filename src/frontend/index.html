@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KataLab - Auto Kata Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>KataLab</h1>
+            <p class="subtitle">Turn company documents into production-grade coding katas.</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section id="upload-section" class="card">
+            <h2>Start New Project</h2>
+            <div id="upload-area" class="upload-area">
+                <div class="upload-icon">📄</div>
+                <p>Drag & drop CVs, Job Specs, or Engineering Docs here</p>
+                <p class="subtitle">or click to browse</p>
+            </div>
+            <input type="file" id="file-input" multiple hidden>
+            <div id="file-list" class="file-list"></div>
+            <button id="upload-btn" class="btn" disabled>Generate Plan</button>
+        </section>
+
+        <!-- Processing Section -->
+        <section id="processing-section" class="card hidden">
+            <div class="loader">
+                <div class="spinner"></div>
+                <p id="processing-text">Processing...</p>
+            </div>
+        </section>
+
+        <!-- Plan Section -->
+        <section id="plan-section" class="card hidden">
+            <h2>Review Implementation Plan</h2>
+            <div id="plan-content" class="plan-details">
+                <!-- Plan details injected here -->
+            </div>
+            
+            <div class="feedback-area">
+                <h3>Feedback</h3>
+                <textarea id="feedback-input" placeholder="E.g., Make the tasks more focused on concurrency, or add a React Native task."></textarea>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="regenerate-btn" class="btn" style="background: rgba(255,255,255,0.1);">Regenerate</button>
+                    <button id="approve-btn" class="btn">Approve & Build</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Section -->
+        <section id="success-section" class="card hidden">
+            <div class="success-message">
+                <div class="success-icon">✨</div>
+                <h2>Kata Repository Ready!</h2>
+                <p>Your custom coding kata has been generated and built successfully.</p>
+                <a href="#" class="download-link" style="width: 100%;">
+                    <button id="download-btn" class="btn">Download .ZIP</button>
+                </a>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/" style="color: var(--primary-color);">Start Over</a>
+            </div>
+        </section>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 import os
 import argparse
 from dotenv import load_dotenv
-from src.summariser.pipeline import InformationExtractionPipeline
-from src.models import CompanyInfo
-from src.summariser.utils import read_documents_from_directory
+from src.backend.summariser.pipeline import InformationExtractionPipeline
+from src.backend.models import CompanyInfo
+from src.backend.summariser.utils import read_documents_from_directory
 
 def main():
     load_dotenv()

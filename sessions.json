@@ -1,0 +1,574 @@
+{
+  "45cc576a-add3-4ebb-97e4-900d2a411a89": {
+    "output_dir": "downloads/45cc576a-add3-4ebb-97e4-900d2a411a89",
+    "company_info": {
+      "roles": [
+        {
+          "title": "Senior Backend Engineer",
+          "stack": [
+            "Go",
+            "Java",
+            "C++",
+            "PostgreSQL",
+            "DynamoDB",
+            "Kubernetes",
+            "Docker",
+            "AWS"
+          ],
+          "requirements": "5+ years of backend engineering experience. Strong proficiency in Go or Java/C++. Willingness to work primarily in Go. Deep understanding of distributed systems patterns (idempotency, distributed transactions, SAGAs). Expert knowledge of SQL (PostgreSQL) and NoSQL stores. Solid experience with Kubernetes, Docker, and AWS services. Passion for TDD, clean code, and automated testing.",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": null,
+            "clients": null,
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. They manage the systems of record that track every penny (and satoshi) of user funds. They are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Go",
+              "Node.js"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        }
+      ],
+      "teams": [
+        {
+          "name": "Core Ledger Team",
+          "products": null,
+          "clients": null,
+          "size": 5,
+          "context": "The Core Ledger Team is the heart of Nebula Financial. They manage the systems of record that track every penny (and satoshi) of user funds. They are responsible for the consistency, durability, and availability of the financial ledger.",
+          "tools_used": [
+            "Go",
+            "Node.js"
+          ],
+          "philosophy": [
+            "precision",
+            "resilience",
+            "continuous improvement",
+            "Ownership & Accountability",
+            "Security & Consistency First",
+            "Proactive Problem Solving",
+            "Knowledge Sharing & Mentorship",
+            "Data-Driven Decisions"
+          ]
+        }
+      ],
+      "clients": null,
+      "products": [
+        {
+          "name": "Nebula Wallet",
+          "type": "product",
+          "description": "Our flagship mobile application that allows users to store, send, and swap both fiat and crypto assets with zero fees. It features built-in high-yield savings accounts powered by DeFi protocols, abstracted away behind a simple, banking-grade UI.",
+          "resources": null
+        },
+        {
+          "name": "Flux Exchange",
+          "type": "product",
+          "description": "Our institutional-grade matching engine for high-frequency trading. Flux handles over 50,000 transactions per second (TPS) and provides liquidity to our consumer wallet and B2B partners.",
+          "resources": null
+        }
+      ],
+      "philosophy": "\"You Build It, You Run It.\""
+    },
+    "plan": {
+      "title": "Core Ledger Simulation - Nebula Financial",
+      "description": "This kata simulates building a simplified component of Nebula Financial's Core Ledger system. It assesses a candidate's ability to design, implement, and test robust and consistent financial record-keeping logic. The tasks focus on data consistency, concurrency, and basic API design.",
+      "tasks": [
+        {
+          "id": "task_1_account_creation",
+          "name": "Account Creation API",
+          "description": "Design and implement a basic API endpoint (in Go) for creating new user accounts. Each account should have a unique ID (UUID), associated user ID, and an initial balance of 0.  Consider error handling for invalid user IDs. Use PostgreSQL for persistence.",
+          "files": [
+            "account.go",
+            "account_test.go",
+            "database.go"
+          ]
+        },
+        {
+          "id": "task_2_deposit_funds",
+          "name": "Deposit Funds API",
+          "description": "Implement an API endpoint to deposit funds into an account. Ensure the deposit amount is positive. Update the account balance atomically in PostgreSQL to prevent race conditions. Use SQL transactions to guarantee ACID properties. Include unit tests.",
+          "files": [
+            "account.go",
+            "account_test.go",
+            "database.go"
+          ]
+        },
+        {
+          "id": "task_3_withdraw_funds",
+          "name": "Withdraw Funds API",
+          "description": "Implement an API endpoint to withdraw funds from an account. Ensure the account has sufficient balance. Implement a check to prevent negative balances. Update the account balance atomically using SQL transactions. Include comprehensive unit tests covering edge cases (e.g., withdrawing the exact balance, insufficient funds).",
+          "files": [
+            "account.go",
+            "account_test.go",
+            "database.go"
+          ]
+        },
+        {
+          "id": "task_4_transfer_funds",
+          "name": "Transfer Funds API (Single Transaction)",
+          "description": "Implement an API endpoint to transfer funds between two accounts. Ensure both accounts exist. Handle the case where either account has insufficient funds. Use a single SQL transaction to ensure that the transfer is atomic (either both debit and credit succeed or neither does). Implement appropriate locking mechanisms to prevent deadlocks (e.g., always lock accounts in the same order).",
+          "files": [
+            "account.go",
+            "account_test.go",
+            "database.go"
+          ]
+        },
+        {
+          "id": "task_5_idempotency",
+          "name": "Idempotency for Transfer Funds",
+          "description": "Enhance the Transfer Funds API to be idempotent.  Implement a mechanism to detect and handle duplicate transfer requests using a unique transfer ID provided by the client. Store transfer IDs in a separate table in PostgreSQL.  Ensure that processing the same transfer ID multiple times only results in a single transfer between accounts. Add thorough testing for idempotency, including simulating network errors.",
+          "files": [
+            "account.go",
+            "account_test.go",
+            "database.go",
+            "transfer_log.go"
+          ]
+        }
+      ]
+    }
+  },
+  "602fd910-c06f-4206-9fa6-fa15baf4e419": {
+    "output_dir": "downloads/602fd910-c06f-4206-9fa6-fa15baf4e419",
+    "company_info": {
+      "roles": [
+        {
+          "title": "Senior Backend Engineer",
+          "stack": [
+            "Go",
+            "Java",
+            "C++",
+            "PostgreSQL",
+            "DynamoDB",
+            "Kubernetes",
+            "Docker",
+            "AWS"
+          ],
+          "requirements": "5+ years of backend engineering experience. Strong proficiency in Go or Java/C++. Willingness to work primarily in Go. Deep understanding of distributed systems patterns (idempotency, distributed transactions, SAGAs). Expert knowledge of SQL (PostgreSQL) and NoSQL stores. Solid experience with Kubernetes, Docker, and AWS services. Passion for TDD, clean code, and automated testing.",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": null,
+            "clients": null,
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Go",
+              "Node.js"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        }
+      ],
+      "teams": [
+        {
+          "name": "Core Ledger Team",
+          "products": null,
+          "clients": null,
+          "size": 5,
+          "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+          "tools_used": [
+            "Go",
+            "Node.js"
+          ],
+          "philosophy": [
+            "precision",
+            "resilience",
+            "continuous improvement",
+            "Ownership & Accountability",
+            "Security & Consistency First",
+            "Proactive Problem Solving",
+            "Knowledge Sharing & Mentorship",
+            "Data-Driven Decisions"
+          ]
+        }
+      ],
+      "clients": null,
+      "products": [
+        {
+          "name": "Nebula Wallet",
+          "type": "product",
+          "description": "Our flagship mobile application that allows users to store, send, and swap both fiat and crypto assets with zero fees. It features built-in high-yield savings accounts powered by DeFi protocols, abstracted away behind a simple, banking-grade UI.",
+          "resources": null
+        },
+        {
+          "name": "Flux Exchange",
+          "type": "product",
+          "description": "Our institutional-grade matching engine for high-frequency trading. Flux handles over 50,000 transactions per second (TPS) and provides liquidity to our consumer wallet and B2B partners.",
+          "resources": null
+        }
+      ],
+      "philosophy": "\"You Build It, You Run It.\""
+    },
+    "plan": {
+      "title": "Core Ledger Transaction Processing Kata",
+      "description": "This kata simulates building a simplified transaction processing system for Nebula Financial's Core Ledger. It assesses a candidate's ability to design, implement, and test robust and scalable backend services using Go, with a focus on data consistency, error handling, and distributed systems principles.",
+      "tasks": [
+        {
+          "id": "task_1_data_model",
+          "name": "Define Transaction Data Model",
+          "description": "Define the data structure for a financial transaction. This should include fields like transaction ID, account ID, transaction type (deposit, withdrawal, transfer), amount, currency, timestamp, and status (pending, completed, failed). Consider using appropriate data types for each field to ensure accuracy and prevent common data-related errors. Create a corresponding Go struct.",
+          "files": [
+            "transaction.go"
+          ]
+        },
+        {
+          "id": "task_2_transaction_logging",
+          "name": "Implement Transaction Logging",
+          "description": "Implement a logging mechanism for tracking transactions. Utilize Go's built-in `log` package or a more sophisticated logging library like `logrus` or `zap`. Log key transaction details at different stages of processing (e.g., when a transaction is received, when it's successfully processed, when an error occurs). Include the ability to configure logging levels (debug, info, warning, error).",
+          "files": [
+            "logger.go",
+            "transaction.go"
+          ]
+        },
+        {
+          "id": "task_3_idempotency_handling",
+          "name": "Implement Idempotency Handling",
+          "description": "Design and implement a mechanism to ensure idempotency of transaction processing. Use transaction ID or combination of other unique fields as key for idempotency check. If the transaction has already been processed, the system should return the previous result without re-executing the transaction logic. Consider using an in-memory store (for simplicity) or an external storage system (e.g., Redis) for tracking processed transactions. This ensures that duplicate transaction requests due to network issues or retries do not lead to incorrect ledger balances.",
+          "files": [
+            "transaction_processor.go",
+            "transaction.go"
+          ]
+        },
+        {
+          "id": "task_4_basic_transaction_processing",
+          "name": "Implement Basic Transaction Processing Logic",
+          "description": "Implement the core logic for processing deposit, withdrawal, and transfer transactions. Simulate updating account balances in a simple in-memory map. Ensure that withdrawals do not result in negative balances (return an error if insufficient funds). Implement basic error handling and logging for failed transactions.",
+          "files": [
+            "transaction_processor.go",
+            "account.go",
+            "transaction.go"
+          ]
+        },
+        {
+          "id": "task_5_concurrent_transaction_handling",
+          "name": "Implement Concurrent Transaction Handling",
+          "description": "Modify the transaction processing logic to handle concurrent transactions safely. Use mutexes or channels to synchronize access to the account balances map and prevent race conditions. Design your solution to minimize contention and maximize throughput. Simulate multiple concurrent transaction requests to test your implementation.",
+          "files": [
+            "transaction_processor.go",
+            "account.go",
+            "transaction.go"
+          ]
+        },
+        {
+          "id": "task_6_testing_and_validation",
+          "name": "Write Unit Tests and Validation",
+          "description": "Write comprehensive unit tests to validate the transaction processing logic, idempotency handling, and concurrency control mechanisms. Cover various scenarios, including successful transactions, insufficient funds errors, duplicate transactions, and concurrent requests. Use table-driven tests to improve test coverage and maintainability.",
+          "files": [
+            "transaction_processor_test.go",
+            "transaction.go",
+            "account.go"
+          ]
+        }
+      ]
+    }
+  },
+  "fcb980cc-bcfe-4882-ba85-e02628268d0c": {
+    "output_dir": "downloads/fcb980cc-bcfe-4882-ba85-e02628268d0c",
+    "company_info": {
+      "roles": [
+        {
+          "title": "Lead Engineer",
+          "stack": [],
+          "requirements": "Distributed systems, fierce code reviewer, system performance.",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": [],
+            "clients": [],
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Node.js",
+              "Go",
+              "PostgreSQL",
+              "DynamoDB",
+              "Kubernetes",
+              "Docker",
+              "AWS",
+              "Datadog",
+              "Prometheus",
+              "Grafana"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        },
+        {
+          "title": "Senior Engineer",
+          "stack": [
+            "Node.js"
+          ],
+          "requirements": "Deep domain knowledge of banking APIs (SEPA, Swift).",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": [],
+            "clients": [],
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Node.js",
+              "Go",
+              "PostgreSQL",
+              "DynamoDB",
+              "Kubernetes",
+              "Docker",
+              "AWS",
+              "Datadog",
+              "Prometheus",
+              "Grafana"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        },
+        {
+          "title": "Backend Engineer",
+          "stack": [
+            "Go"
+          ],
+          "requirements": "Strong Go developer, very productive.",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": [],
+            "clients": [],
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Node.js",
+              "Go",
+              "PostgreSQL",
+              "DynamoDB",
+              "Kubernetes",
+              "Docker",
+              "AWS",
+              "Datadog",
+              "Prometheus",
+              "Grafana"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        },
+        {
+          "title": "Junior Backend",
+          "stack": [],
+          "requirements": "Eager learner, great at frontend/internal tools.",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": [],
+            "clients": [],
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Node.js",
+              "Go",
+              "PostgreSQL",
+              "DynamoDB",
+              "Kubernetes",
+              "Docker",
+              "AWS",
+              "Datadog",
+              "Prometheus",
+              "Grafana"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        },
+        {
+          "title": "Senior Backend Engineer",
+          "stack": [
+            "Go",
+            "Java",
+            "C++",
+            "PostgreSQL",
+            "NoSQL",
+            "Kubernetes",
+            "Docker",
+            "AWS"
+          ],
+          "requirements": "5+ years of backend engineering experience. Strong proficiency in Go or Java/C++. Willingness to work primarily in Go. Deep understanding of distributed systems patterns (idempotency, distributed transactions, SAGAs). Expert knowledge of SQL (PostgreSQL) and NoSQL stores. Solid experience with Kubernetes, Docker, and AWS services. Passion for TDD, clean code, and automated testing.",
+          "team": {
+            "name": "Core Ledger Team",
+            "products": [],
+            "clients": [],
+            "size": 5,
+            "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+            "tools_used": [
+              "Node.js",
+              "Go",
+              "PostgreSQL",
+              "DynamoDB",
+              "Kubernetes",
+              "Docker",
+              "AWS",
+              "Datadog",
+              "Prometheus",
+              "Grafana"
+            ],
+            "philosophy": [
+              "precision",
+              "resilience",
+              "continuous improvement",
+              "Ownership & Accountability",
+              "Security & Consistency First",
+              "Proactive Problem Solving",
+              "Knowledge Sharing & Mentorship",
+              "Data-Driven Decisions"
+            ]
+          }
+        }
+      ],
+      "teams": [
+        {
+          "name": "Core Ledger Team",
+          "products": [],
+          "clients": [],
+          "size": 5,
+          "context": "The Core Ledger Team is the heart of Nebula Financial. We manage the systems of record that track every penny (and satoshi) of user funds. We are responsible for the consistency, durability, and availability of the financial ledger.",
+          "tools_used": [
+            "Node.js",
+            "Go",
+            "PostgreSQL",
+            "DynamoDB",
+            "Kubernetes",
+            "Docker",
+            "AWS",
+            "Datadog",
+            "Prometheus",
+            "Grafana"
+          ],
+          "philosophy": [
+            "precision",
+            "resilience",
+            "continuous improvement",
+            "Ownership & Accountability",
+            "Security & Consistency First",
+            "Proactive Problem Solving",
+            "Knowledge Sharing & Mentorship",
+            "Data-Driven Decisions"
+          ]
+        }
+      ],
+      "clients": [],
+      "products": [
+        {
+          "name": "Nebula Wallet",
+          "type": "product",
+          "description": "Our flagship mobile application that allows users to store, send, and swap both fiat and crypto assets with zero fees. It features built-in high-yield savings accounts powered by DeFi protocols, abstracted away behind a simple, banking-grade UI.",
+          "resources": []
+        },
+        {
+          "name": "Flux Exchange",
+          "type": "product",
+          "description": "Our institutional-grade matching engine for high-frequency trading. Flux handles over 50,000 transactions per second (TPS) and provides liquidity to our consumer wallet and B2B partners.",
+          "resources": []
+        }
+      ],
+      "philosophy": "\"You Build It, You Run It.\""
+    },
+    "plan": {
+      "title": "Nebula Financial Core Ledger Kata",
+      "description": "This kata simulates building a simplified version of Nebula Financial's core ledger system, focusing on transaction processing, concurrency, and data consistency. It's designed to assess a candidate's ability to design and implement robust, high-performance backend systems using Go, with a focus on the principles of the Core Ledger Team.",
+      "tasks": [
+        {
+          "id": "task_1_transaction_struct",
+          "name": "Define Transaction Structure",
+          "description": "Define a `Transaction` struct in `transaction.go` that includes fields for `ID` (UUID), `Timestamp` (Unix timestamp), `FromAccount`, `ToAccount`, `Amount`, and `Status` (enum: `Pending`, `Confirmed`, `Rejected`). Implement functions to generate new transaction IDs and record the timestamp. Use the `uuid` package for generating IDs and `time` package for timestamps.",
+          "files": [
+            "transaction.go"
+          ]
+        },
+        {
+          "id": "task_2_account_management",
+          "name": "Implement Account Management",
+          "description": "Create an `Account` struct in `account.go` with fields for `ID`, `Balance`, and `Lock` (mutex for concurrency control). Implement functions to `Credit` and `Debit` an account, ensuring thread safety using the mutex. Implement an `InsufficientFundsError` error to return when debiting would result in a negative balance.",
+          "files": [
+            "account.go"
+          ]
+        },
+        {
+          "id": "task_3_transaction_processing",
+          "name": "Build Transaction Processor",
+          "description": "Create a `TransactionProcessor` in `processor.go` with a method `ProcessTransaction` that takes a `Transaction` and two `Account` objects as input. This function should: 1. Acquire locks on both `FromAccount` and `ToAccount` in a consistent order to prevent deadlocks (e.g., always lock accounts in ascending ID order). 2. Debit the `FromAccount`. 3. Credit the `ToAccount`. 4. Update the `Transaction` status to `Confirmed` or `Rejected` based on the outcome. 5. Log the transaction details using a structured logger (e.g., `logrus` or `zap`). Handle `InsufficientFundsError` and any other potential errors gracefully. Ensure to release the locks.",
+          "files": [
+            "processor.go"
+          ]
+        },
+        {
+          "id": "task_4_concurrency_handling",
+          "name": "Simulate Concurrent Transactions",
+          "description": "In `main.go`, create multiple goroutines to simulate concurrent transactions. Create a set of accounts with initial balances. Generate a series of transactions with random `FromAccount`, `ToAccount`, and `Amount`. Use the `TransactionProcessor` to process these transactions concurrently. Implement mechanisms to wait for all goroutines to complete (e.g., `sync.WaitGroup`).",
+          "files": [
+            "main.go"
+          ]
+        },
+        {
+          "id": "task_5_logging_and_monitoring",
+          "name": "Implement Logging and Monitoring",
+          "description": "Integrate structured logging (e.g., `logrus` or `zap`) throughout the application to log important events, such as transaction processing, account updates, and errors.  Include transaction IDs and account IDs in log messages for traceability. Implement basic metrics using the `expvar` package to expose transaction processing statistics (e.g., number of transactions processed, number of errors).",
+          "files": [
+            "main.go"
+          ]
+        },
+        {
+          "id": "task_6_idempotency",
+          "name": "Implement Idempotency",
+          "description": "Modify the `TransactionProcessor` to ensure transactions are processed idempotently. Introduce a simple check (e.g., using a map or a small in-memory store) to verify if a transaction with a given ID has already been processed. If a transaction has already been processed, return the previous result without re-executing the transaction logic.",
+          "files": [
+            "processor.go"
+          ]
+        }
+      ]
+    }
+  }
+}
