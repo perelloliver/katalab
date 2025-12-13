@@ -1,0 +1,20 @@
+learning_style:
+  primary: "Theoretical/Academic"
+  description: "Needs to understand the 'First Principles' before trusting a tool. Will not use a library if she doesn't understand the math behind it."
+
+preferences:
+  format: "Deep Dives & Whitepapers"
+  dislikes: 
+    - "Magic abstractions"
+    - "ClickOps"
+    - "Gamified tutorials"
+
+goals:
+  short_term:
+    - "Learn to containerize a PyTorch model"
+    - "Understand why we use Kubernetes instead of Slurm"
+  long_term:
+    - "Build a new protein design framework that is both mathematically rigorous and scalable"
+
+mentorship_needs:
+  - "Needs a patient senior engineer who can explain *why* specific engineering patterns matter, not just *how* to do them."
