@@ -1,0 +1,21 @@
+learning_style:
+  primary: "Kinesthetic"
+  secondary: "Visual"
+  description: "Learns best by doing and breaking things. Prefers interactive labs over documentation."
+
+preferences:
+  format: "Interactive Codewalks"
+  session_duration: "Short (30-45 mins)"
+  feedback_mechanism: "Immediate automated tests"
+
+dislikes:
+  - "Long video lectures (> 10 mins)"
+  - "Abstract theoretical reading"
+  - "Pair programming with strangers"
+
+goals:
+  short_term:
+    - "Deploy a service to Kubernetes independently"
+    - "Understand the 'why' behind distributed locking"
+  long_term:
+    - "become a lead architect for the Payments Gateway"
