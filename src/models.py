@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 class Technology(BaseModel):
     name: str = Field(description="Name of the technology")
-    preferences: str | None = Field(description="Preferences for use - i.e we use Rust but only for backend optimisations")
+    internal_usage_preferences: str | None = Field(description="Preferences for use - i.e we use Rust but only for backend optimisations, uv and poetry are allowed but uv preferred. If no specific usage preferences are given, leave blank.")
     use_cases: list[str] | None = Field(description="Use cases for the technology - i.e we use Weaviate for vector databases for RAG applications")
 
 class Stack(BaseModel):
