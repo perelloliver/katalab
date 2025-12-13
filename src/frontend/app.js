@@ -2,27 +2,26 @@ const state = {
     companyFiles: [],
     employeeFiles: [],
     sessionId: null,
-    plan: null,
-    isProcessing: false
+    plan: null
 };
 
 const dom = {
     uploadSection: document.getElementById('upload-section'),
     processingSection: document.getElementById('processing-section'),
     planSection: document.getElementById('plan-section'),
-    buildSection: document.getElementById('build-section'),
     successSection: document.getElementById('success-section'),
 
-    companyFileInput: document.getElementById('company-file-input'),
     companyUploadArea: document.getElementById('company-upload-area'),
-    companyFileList: document.getElementById('company-file-list'),
-
-    employeeFileInput: document.getElementById('employee-file-input'),
     employeeUploadArea: document.getElementById('employee-upload-area'),
+    companyFileInput: document.getElementById('company-file-input'),
+    employeeFileInput: document.getElementById('employee-file-input'),
+
+    companyFileList: document.getElementById('company-file-list'),
     employeeFileList: document.getElementById('employee-file-list'),
 
     nTasksInput: document.getElementById('n-tasks-input'),
     uploadBtn: document.getElementById('upload-btn'),
+
     processingText: document.getElementById('processing-text'),
     planContent: document.getElementById('plan-content'),
     feedbackInput: document.getElementById('feedback-input'),
@@ -31,23 +30,27 @@ const dom = {
     downloadBtn: document.getElementById('download-btn')
 };
 
-// Event Listeners for Company Files
+// Event Listeners for Company Upload
 dom.companyUploadArea.addEventListener('click', () => dom.companyFileInput.click());
 dom.companyUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
     dom.companyUploadArea.classList.add('dragover');
 });
-dom.companyUploadArea.addEventListener('dragleave', () => dom.companyUploadArea.classList.remove('dragover'));
+dom.companyUploadArea.addEventListener('dragleave', () => {
+    dom.companyUploadArea.classList.remove('dragover');
+});
 dom.companyUploadArea.addEventListener('drop', (e) => handleDrop(e, 'company'));
 dom.companyFileInput.addEventListener('change', (e) => handleFileSelect(e, 'company'));
 
-// Event Listeners for Employee Files
+// Event Listeners for Employee Upload
 dom.employeeUploadArea.addEventListener('click', () => dom.employeeFileInput.click());
 dom.employeeUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
     dom.employeeUploadArea.classList.add('dragover');
 });
-dom.employeeUploadArea.addEventListener('dragleave', () => dom.employeeUploadArea.classList.remove('dragover'));
+dom.employeeUploadArea.addEventListener('dragleave', () => {
+    dom.employeeUploadArea.classList.remove('dragover');
+});
 dom.employeeUploadArea.addEventListener('drop', (e) => handleDrop(e, 'employee'));
 dom.employeeFileInput.addEventListener('change', (e) => handleFileSelect(e, 'employee'));
 
@@ -60,21 +63,22 @@ function handleDrop(e, type) {
     e.preventDefault();
     const uploadArea = type === 'company' ? dom.companyUploadArea : dom.employeeUploadArea;
     uploadArea.classList.remove('dragover');
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    addFiles(droppedFiles, type);
+    const files = Array.from(e.dataTransfer.files);
+    addFiles(files, type);
 }
 
 function handleFileSelect(e, type) {
-    const selectedFiles = Array.from(e.target.files);
-    addFiles(selectedFiles, type);
+    const files = Array.from(e.target.files);
+    addFiles(files, type);
+    e.target.value = '';
 }
 
-function addFiles(newFiles, type) {
+function addFiles(files, type) {
     if (type === 'company') {
-        state.companyFiles = [...state.companyFiles, ...newFiles];
+        state.companyFiles = [...state.companyFiles, ...files];
         renderFileList('company');
     } else {
-        state.employeeFiles = [...state.employeeFiles, ...newFiles];
+        state.employeeFiles = [...state.employeeFiles, ...files];
         renderFileList('employee');
     }
     updateUploadButton();
@@ -84,16 +88,23 @@ function renderFileList(type) {
     const files = type === 'company' ? state.companyFiles : state.employeeFiles;
     const listElement = type === 'company' ? dom.companyFileList : dom.employeeFileList;
 
+    if (files.length === 0) {
+        listElement.innerHTML = '';
+        return;
+    }
+
     listElement.innerHTML = files.map(file => `
         <div class="file-item">
             <span>${file.name}</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted)">${(file.size / 1024).toFixed(1)} KB</span>
+            <span style="color: #999;">${(file.size / 1024).toFixed(1)} KB</span>
         </div>
     `).join('');
 }
 
 function updateUploadButton() {
-    dom.uploadBtn.disabled = state.companyFiles.length === 0 || state.employeeFiles.length === 0;
+    const hasCompany = state.companyFiles.length > 0;
+    const hasEmployee = state.employeeFiles.length > 0;
+    dom.uploadBtn.disabled = !(hasCompany && hasEmployee);
 }
 
 async function uploadFiles() {
@@ -141,11 +152,11 @@ function renderPlan() {
         <div class="info-group">
             <div class="info-label">Tasks (${p.tasks.length})</div>
             <ul class="task-list">
-                ${p.tasks.map(t => `
+                ${p.tasks.map((t, i) => `
                     <li class="task-item">
-                        <div class="task-title">${t.name}</div>
+                        <div class="task-title">${i + 1}. ${t.name}</div>
                         <div class="task-desc">${t.description}</div>
-                        <div class="task-desc" style="margin-top:0.5rem; font-size:0.8rem">Files: ${t.files.join(', ')}</div>
+                        <div class="task-desc" style="margin-top:0.5rem;">Files: ${t.files.join(', ')}</div>
                     </li>
                 `).join('')}
             </ul>
@@ -174,7 +185,7 @@ async function regeneratePlan() {
 
         const newPlan = await response.json();
         state.plan = newPlan;
-        dom.feedbackInput.value = ''; // Clear feedback
+        dom.feedbackInput.value = '';
 
         renderPlan();
         showSection('plan-section');
@@ -208,7 +219,7 @@ async function buildRepo() {
 
             buffer += decoder.decode(value, { stream: true });
             const lines = buffer.split('\n');
-            buffer = lines.pop(); // Keep incomplete chunk
+            buffer = lines.pop();
 
             for (const line of lines) {
                 if (!line.trim()) continue;
@@ -241,12 +252,8 @@ function handleBuildEvent(event) {
 }
 
 function showSection(id) {
-    // Hide all sections
-    Object.values(dom).forEach(el => {
-        if (el && el.id && el.id.includes('section')) {
-            el.classList.add('hidden');
-        }
+    [dom.uploadSection, dom.processingSection, dom.planSection, dom.successSection].forEach(el => {
+        el.classList.add('hidden');
     });
-    // Show target
     document.getElementById(id).classList.remove('hidden');
 }

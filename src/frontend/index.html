@@ -4,100 +4,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KataLab - Auto Kata Generator</title>
+    <title>KataLab - Build Better Engineers</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>KataLab</h1>
-            <p class="subtitle">Turn company documents into production-grade coding katas.</p>
-        </header>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="../fig/logo.jpg" alt="KataLab Logo" class="logo-img">
+            <span class="logo-text">KataLab</span>
+        </div>
+        <nav class="nav">
+            <a href="#docs" class="nav-link">DOCS</a>
+            <a href="#examples" class="nav-link">EXAMPLES</a>
+            <a href="https://github.com" class="nav-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                GITHUB
+            </a>
+        </nav>
+    </header>
 
+    <!-- Main Content -->
+    <main class="main">
         <!-- Upload Section -->
-        <section id="upload-section" class="card">
-            <h2>Start New Project</h2>
-            <p class="subtitle" style="margin-bottom: 2rem;">Upload company documents and candidate profile separately
+        <section id="upload-section" class="section">
+            <div class="status-badge">SYSTEM: READY</div>
+
+            <h1 class="hero-title">
+                BUILD BETTER<br>
+                <span class="hero-accent">ENGINEERS</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Ingest company documentation. Build custom coding katas. Train your devs faster.<br>
+                Precision engineered by Gemini.
             </p>
 
-            <!-- Company Files Upload -->
-            <div class="upload-group">
-                <h3>Company Documents</h3>
-                <div id="company-upload-area" class="upload-area">
-                    <div class="upload-icon">🏢</div>
-                    <p>Drag & drop company docs here</p>
-                    <p class="subtitle">Job specs, engineering docs, company info</p>
+            <div class="upload-container">
+                <!-- Company Upload -->
+                <div class="upload-section">
+                    <h3 class="upload-section-title">COMPANY DOCUMENTS</h3>
+                    <div class="upload-box" id="company-upload-area">
+                        <svg class="upload-icon-sm" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                        </svg>
+                        <p class="upload-text">Drop company docs here</p>
+                        <p class="upload-hint-sm">or click to browse</p>
+                    </div>
+                    <input type="file" id="company-file-input" multiple hidden>
+                    <div id="company-file-list" class="file-list"></div>
                 </div>
-                <input type="file" id="company-file-input" multiple hidden>
-                <div id="company-file-list" class="file-list"></div>
-            </div>
 
-            <!-- Employee Files Upload -->
-            <div class="upload-group" style="margin-top: 2rem;">
-                <h3>Candidate Profile</h3>
-                <div id="employee-upload-area" class="upload-area">
-                    <div class="upload-icon">👤</div>
-                    <p>Drag & drop candidate docs here</p>
-                    <p class="subtitle">CVs, resumes, portfolios</p>
+                <!-- Employee Upload -->
+                <div class="upload-section">
+                    <h3 class="upload-section-title">CANDIDATE PROFILE</h3>
+                    <div class="upload-box" id="employee-upload-area">
+                        <svg class="upload-icon-sm" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                        </svg>
+                        <p class="upload-text">Drop candidate docs here</p>
+                        <p class="upload-hint-sm">or click to browse</p>
+                    </div>
+                    <input type="file" id="employee-file-input" multiple hidden>
+                    <div id="employee-file-list" class="file-list"></div>
                 </div>
-                <input type="file" id="employee-file-input" multiple hidden>
-                <div id="employee-file-list" class="file-list"></div>
-            </div>
 
-            <!-- Task Count Setting -->
-            <div class="task-count-group" style="margin-top: 2rem;">
-                <label for="n-tasks-input">Number of Tasks</label>
-                <input type="number" id="n-tasks-input" min="1" max="10" value="1" class="task-count-input">
-                <p class="subtitle" style="margin-top: 0.5rem;">How many coding tasks should be generated (1-10)</p>
+                <!-- Controls -->
+                <div class="controls-row">
+                    <div class="task-count-control">
+                        <label for="n-tasks-input">NUMBER OF TASKS</label>
+                        <input type="number" id="n-tasks-input" min="1" max="10" value="1">
+                    </div>
+                    <button id="upload-btn" class="primary-btn" disabled>GENERATE PLAN →</button>
+                </div>
             </div>
-
-            <button id="upload-btn" class="btn" disabled>Generate Plan</button>
         </section>
 
         <!-- Processing Section -->
-        <section id="processing-section" class="card hidden">
+        <section id="processing-section" class="section hidden">
+            <div class="status-badge">PROCESSING</div>
             <div class="loader">
                 <div class="spinner"></div>
-                <p id="processing-text">Processing...</p>
+                <p id="processing-text" class="processing-text">Parsing documents and generating plan...</p>
             </div>
         </section>
 
         <!-- Plan Section -->
-        <section id="plan-section" class="card hidden">
-            <h2>Review Implementation Plan</h2>
-            <div id="plan-content" class="plan-details">
-                <!-- Plan details injected here -->
-            </div>
+        <section id="plan-section" class="section hidden">
+            <div class="status-badge">PLAN READY</div>
+            <h2 class="section-title">REVIEW IMPLEMENTATION PLAN</h2>
+            <div id="plan-content" class="plan-content"></div>
 
             <div class="feedback-area">
-                <h3>Feedback</h3>
+                <label for="feedback-input">FEEDBACK & REFINEMENT</label>
                 <textarea id="feedback-input"
                     placeholder="E.g., Make the tasks more focused on concurrency, or add a React Native task."></textarea>
-                <div style="display: flex; gap: 1rem;">
-                    <button id="regenerate-btn" class="btn"
-                        style="background: rgba(255,255,255,0.1);">Regenerate</button>
-                    <button id="approve-btn" class="btn">Approve & Build</button>
+                <div class="button-group">
+                    <button id="regenerate-btn" class="secondary-btn">↻ REGENERATE</button>
+                    <button id="approve-btn" class="primary-btn">APPROVE & BUILD →</button>
                 </div>
             </div>
         </section>
 
         <!-- Success Section -->
-        <section id="success-section" class="card hidden">
-            <div class="success-message">
-                <div class="success-icon">✨</div>
-                <h2>Kata Repository Ready!</h2>
+        <section id="success-section" class="section hidden">
+            <div class="status-badge status-success">COMPLETE</div>
+            <div class="success-content">
+                <h2 class="section-title">KATA REPOSITORY READY</h2>
                 <p>Your custom coding kata has been generated and built successfully.</p>
-                <a href="#" class="download-link" style="width: 100%;">
-                    <button id="download-btn" class="btn">Download .ZIP</button>
+                <a href="#" class="download-link">
+                    <button id="download-btn" class="primary-btn">↓ DOWNLOAD .ZIP</button>
                 </a>
-            </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="/" style="color: var(--primary-color);">Start Over</a>
+                <a href="/" class="link">← Start Over</a>
             </div>
         </section>
+    </main>
 
-    </div>
     <script src="app.js"></script>
 </body>
 

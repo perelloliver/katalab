@@ -45,7 +45,7 @@ class KataAgent:
         DynamicKataPlan = create_model(
             'DynamicKataPlan',
             title=(str, Field(description="Title of the Kata Repository")),
-            description=(str, Field(description="Overview of what this Kata aims to teach/assess")),
+            description=(str, Field(description="A brief, plain language, engineer-to-engineer overview of what this Kata aims to teach/assess")),
             tasks=(list[Plan], Field(min_length=self.n_tasks, max_length=self.n_tasks, description=f"List of exactly {self.n_tasks} tasks"))
         )
 
@@ -97,7 +97,8 @@ class KataAgent:
             Tailor the task explanation and difficulty to the candidate's level ({employee_data.level})
             and learning style ({employee_data.likely_learning_style}).
             
-            Output a detailed README.md file content that explains the task to the candidate.
+            Remember you are talking engineer-to-engineer, so use clear, direct language without too much jargon. Use technical terms appropriately and do not overindex or overcomplicate the task.
+            Output an easy to understand, cleanly parsed README.md file content that explains the task to the candidate.
             The task should involve fixing or implementing a specific feature.
             """
             
