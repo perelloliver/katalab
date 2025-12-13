@@ -1,0 +1,42 @@
+Interview Transcript
+Candidate: Dr. Sofia Al-Fayed
+Interviewer: Mark Chen (Head of Platform Engineering)
+Date: Nov 15, 2025
+
+MARK: Hi Sofia, huge fan of your NeurIPS paper. The way you handled the SE(3) invariance was elegant.
+
+SOFIA: Thank you. It was a struggle to get the gradients to flow correctly through the rotation matrix.
+
+MARK: I bet. So, for the coding exercise, I asked you to "productionize" a simple inference endpoint for that model. Can you walk me through your solution?
+
+SOFIA: Sure. I created a Python script `server.py`. It uses Flask. When you hit the `/predict` route, it loads the model from disk, parses the input JSON, converts it to a tensor, runs the forward pass, and returns the result.
+
+MARK: Okay. I see you load the model *inside* the request handler.
+
+SOFIA: Yes.
+
+MARK: What happens if 10 people hit the endpoint at the same time?
+
+SOFIA: It... loads the model 10 times?
+
+MARK: And that model is 2GB?
+
+SOFIA: Oh. I see. It runs out of RAM.
+
+MARK: Exactly. Also, you didn't include a Dockerfile. How do I run this on my machine?
+
+SOFIA: You just need Conda. I can send you my `environment.yml`.
+
+MARK: In our prod environment, we don't use Conda. We use Kubernetes containers. Have you ever written a Dockerfile?
+
+SOFIA: No. I usually just ssh into the cluster head node, activate my environment, and run `sbatch`.
+
+MARK: Okay. How do you test your model?
+
+SOFIA: I run it on the test set and check the RMSE.
+
+MARK: I mean unit tests. Like, testing that the input parsing works, or that the tensor shapes are correct.
+
+SOFIA: I print the shapes during debugging. If they match, it works. I don't write separate test functions if that's what you mean.
+
+MARK: Understood. Thanks Sofia.
