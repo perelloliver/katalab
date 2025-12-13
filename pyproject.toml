@@ -9,5 +9,6 @@ dependencies = [
     "google-genai>=1.55.0",
     "pydantic>=2.12.5",
     "pydantic-ai>=1.32.0",
+    "python-dotenv>=1.2.1",
     "ruff>=0.14.9",
 ]
