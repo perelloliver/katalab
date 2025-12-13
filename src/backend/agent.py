@@ -1,16 +1,17 @@
 from src.backend.google_client import google_client
-from src.backend.models import RoleInformation, Plan
+from src.backend.models import RoleInformation, Plan, Repo, TaskImplementation
 from google.genai import types
 
 
 class KataAgent:
-    def __init__(self, model_name: str = "gemini-3-pro-preview", n_tasks: int = 3):
+    def __init__(self, model_name: str = "gemini-3-pro-preview", n_tasks: int = 3, role_information: RoleInformation | None = None):
         self.client = google_client
         self.model_name = model_name
         self.n_tasks = n_tasks
+        self.role_information = role_information
         self.latest_plan: Plan | None = None
 
-    def plan(self, role_information: RoleInformation, feedback: str | None = None) -> Plan:
+    def plan(self, feedback: str | None = None) -> Plan:
         prompt = f"""
         You are a senior software engineer, technical interviewer and technical trainer.
         You are designing a coding kata of length {self.n_tasks} tasks, tailored to the role information below.
@@ -39,6 +40,15 @@ class KataAgent:
         )
 
         if response.parsed:
+            self.latest_plan = response.parsed
             return response.parsed
         else:
             raise ValueError(f"Failed to parse response: {response}")
+        
+    def create_repo(self) -> Repo:
+        if not self.latest_plan:
+            self.latest_plan = self.plan()
+        
+        # functionize create_task - run an LLM call to create a task implementation
+        # run this async for each task in self.latest_plan
+        # generate a readme and compile these into a Repo

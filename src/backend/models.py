@@ -35,3 +35,14 @@ class KataTask(BaseModel):
 class Plan(BaseModel):
     focus_points: list[str] = Field(description="Core focus points for the kata")
     tasks: list[KataTask] = Field(description="List of tasks for the kata")
+
+class FileContent(BaseModel):
+    filename: str = Field(description="Name of the file, e.g. main.py")
+    content: str = Field(description="Content of the file")
+
+class TaskImplementation(BaseModel):
+    files: list[FileContent] = Field(description="List of files for the task")
+
+class Repo(BaseModel):
+    readme: str = Field(description="Readme for the repository, formatted in MD.")
+    modules: list[TaskImplementation] = Field(description="List of modules for the repository")
