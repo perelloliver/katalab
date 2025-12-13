@@ -1,7 +1,7 @@
 from src.models import RoleInformation
 from google.genai import types
-from src.client import google_client
-from src.utils.logger import get_logger
+from src.backend.client import google_client
+from src.backend.utils import get_logger
 
 logger = get_logger(__name__)
 

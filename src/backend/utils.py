@@ -1,6 +1,4 @@
 import os
-from typing import List
-from src.utils.logger import get_logger
 import logging
 import sys
 
@@ -35,7 +33,7 @@ def get_logger(name: str = "katalab", level: int = logging.INFO) -> logging.Logg
 
     return logger
 
-def read_documents_from_directory(directory_path: str) -> List[str]:
+def read_documents_from_directory(directory_path: str) -> list[str]:
     """
     Reads all file contents from a directory and returns them as a list of strings.
     

@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
-from src.utils import get_logger, read_documents_from_directory
-from src.summariser.role import summarise_role_information
+from ..utils import get_logger, read_documents_from_directory
+from .role import summarise_role_information
 
 logger = get_logger(__name__)
 
