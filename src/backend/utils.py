@@ -33,6 +33,8 @@ def get_logger(name: str = "katalab", level: int = logging.INFO) -> logging.Logg
 
     return logger
 
+logger = get_logger(__name__)
+
 def read_documents_from_directory(directory_path: str) -> list[str]:
     """
     Reads all file contents from a directory and returns them as a list of strings.
@@ -45,8 +47,7 @@ def read_documents_from_directory(directory_path: str) -> list[str]:
     """
     documents = []
     if not os.path.exists(directory_path):
-        logger.warning(f"Directory {directory_path} does not exist.")
-        return documents
+        raise ValueError(f"Directory {directory_path} does not exist.")
 
     for filename in os.listdir(directory_path):
         filepath = os.path.join(directory_path, filename)
