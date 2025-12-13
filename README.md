@@ -8,13 +8,15 @@ Built entirely with Antigravity and Google AI Studio.
 
 ## Overview
 
+<img width="1379" height="786" alt="Screenshot 2025-12-13 at 17 47 10" src="https://github.com/user-attachments/assets/b3732c09-dbaa-4b58-adfa-3dc930bab3a4" />
+
 Katalab parses company context (CVs, engineering blogs, job specs) and uses an Agent to design and generate a custom "Coding Kata" repository tailored to that company's stack and values.
 
 ## Structure
 
 - **Backend**: FastAPI application (`src/backend`)
 - **Frontend**: Vanilla JS/CSS web interface (`src/frontend`)
-- **Agent**: Google GenAI powered planning and generation.
+- **Agent**: Gemini powered planning and generation.
 
 ## How to Run
 
