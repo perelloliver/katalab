@@ -148,6 +148,10 @@ async def download_repo(session_id: str):
         
     return FileResponse(zip_path, filename="kata_repo.zip")
 
+# Serve logo and assets from fig directory
+if os.path.exists("fig"):
+    app.mount("/fig", StaticFiles(directory="fig"), name="fig")
+
 # Serve frontend
 # Check if src/frontend exists to avoid startup error
 if os.path.exists("src/frontend"):
