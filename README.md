@@ -5,7 +5,9 @@
 
 Turn company documents into coding katas for custom employee team onboarding.
 
-Built entirely with Antigravity and Google AI Studio.
+Built entirely with Antigravity and Google AI Studio for the DeepMind x Cerebral Valley LDN hack.
+
+**We had fun building and liked the idea, so this repo is currently being taken from hack to MVP.**
 
 ## Overview
 
