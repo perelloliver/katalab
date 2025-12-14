@@ -1,7 +1,6 @@
 from src.backend.client import google_client
 from src.backend.models import CompanyInfo, EmployeeInfo, KataPlan, Plan, TaskImplementation
 from google.genai import types
-import json
 
 from pydantic import create_model, Field
 
